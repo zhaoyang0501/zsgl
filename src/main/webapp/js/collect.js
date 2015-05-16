@@ -1,14 +1,14 @@
-jQuery.resource = {
-		resourceDataTable:null,
+jQuery.collect = {
+		collectDataTable:null,
 		categoryChange:function(category){
 			$(".ppt-category-list a").removeClass("selected");
 			$("#category_href_"+category).addClass("selected");
 			$("#category").val(category);
-			jQuery.resource.initSearchDataTable();
+			jQuery.collect.initSearchDataTable();
 		},
 		initSearchDataTable : function() {
-			if (this.resourceDataTable == null) {
-				this.resourceDataTable = $('#dt_table_view').dataTable({
+			if (this.collectDataTable == null) {
+				this.collectDataTable = $('#dt_table_view').dataTable({
 					"sDom" : "<'row-fluid'<'span6'l>r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oLanguage" : {
@@ -32,7 +32,7 @@ jQuery.resource = {
 					"sServerMethod" : "POST",
 					"bProcessing" : true,
 					"bSort" : false,
-					"sAjaxSource" : $.ace.getContextPath() + "/resource/list",
+					"sAjaxSource" : $.ace.getContextPath() + "/collect/list",
 					"fnDrawCallback" : function(oSettings) {
 						$('[rel="popover"],[data-rel="popover"]').popover();
 					},
@@ -62,9 +62,7 @@ jQuery.resource = {
 						});
 					},
 					"aoColumns" : [ {
-						"mDataProp" : "name"
-					},{
-						"mDataProp" : "creater.userName"
+						"mDataProp" : "resource.name"
 					}, {
 						"mDataProp" : "createDate"
 					}, {
@@ -72,11 +70,11 @@ jQuery.resource = {
 					}],
 					"aoColumnDefs" : [
 						{
-							'aTargets' : [3],
+							'aTargets' : [2],
 							'fnRender' : function(oObj, sVal) {
 								return  "<a href=\"resource/resourceDetail?id="+oObj.aData.id+"\" target=\"_blank\">查看</a> " +
-										"<a href=\"./upload/"+oObj.aData.filePath+"\" target=\"_blank\">下载</a> "+
-										"<a onclick=\"jQuery.resource.collect('"+oObj.aData.id+"')\" href='javascript:;' >收藏</a>";
+										"<a href=\"./upload/"+oObj.aData.resource.filePath+"\" target=\"_blank\">下载</a> "+
+										"<a onclick=\"jQuery.collect.collectundo('"+oObj.aData.id+"')\" href='javascript:;' >取消收藏</a>";
 							}
 						},
 					 {
@@ -87,20 +85,22 @@ jQuery.resource = {
 
 				});
 			} else {
-				var oSettings = this.resourceDataTable.fnSettings();
+				var oSettings = this.collectDataTable.fnSettings();
 				oSettings._iDisplayStart = 0;
-				this.resourceDataTable.fnDraw(oSettings);
+				this.collectDataTable.fnDraw(oSettings);
 			}
 
 		},
-		collect :function(id){
+		collectundo :function(id){
 			$.ajax({
     			type : "get",
-    			url : $.ace.getContextPath() + "/collect/saveCollect?resource.id="+id,
+    			url : $.ace.getContextPath() + "/collect/collectundo?collect.id="+id,
     			dataType : "json",
     			success : function(json) {
     				alert(json.tip);
+    				jQuery.collect.initSearchDataTable();
     			}
     		});
 		},
+		
 };

@@ -4,7 +4,7 @@
 <html lang="ch">
 <%@ include file="../common/meta.jsp"%>
 <head>
-<script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/ace/admin.resource.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/ace/admin.notice.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/falgun/bootbox.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -39,38 +39,25 @@
 					<div class="span12">
 						<div class="content-widgets light-gray">
 							<div class="widget-head  bondi-blue" >
-								<h3>上传文件管理</h3>
+								<h3>公告管理</h3>
 							</div>
 							<div class="box well form-inline">
-								<span>名称：</span>
-								<input type="text" id="name" >
-								
-								<span>类别：</span>
-								<select id="categoryId">
-										<option value=""></option>
-									<c:forEach items="${categorys }" var="bean">
-										<option value="${bean.id }">${bean.name }</option>
-									</c:forEach>
-								</select>
-								
-								<a onclick="$.adminResource.initSearchDataTable()"
+								<span>标题：</span>
+								<input type="text" id="_name" >
+								<a onclick="$.adminNotice.initSearchDataTable()"
 									class="btn btn-info" data-loading-text="正在加载..."><i class="icon-search"></i>查询</a>
 							</div>
-							
 							<div class="widget-container">
+								
+									<a class="btn btn-success" style="float: right; margin: 5px;" onclick="$.adminNotice.showaddModal()"><i class="icon-plus"></i>发布</a>
 								<table class="responsive table table-striped table-bordered"
-									id="dt_resource_view">
+									id="dt_table_view">
 									<thead>
 										<tr>
 											<th >id</th>
-											<th >文件名</th>
 											<th >标题</th>
-											<th >描述</th>
-											<th >分类</th>
-											<th >关键字</th>
-											<th >上传者</th>
-											<th >上传时间</th>
-											<th >操作</th>
+											<th >正文</th>
+											<th >发布时间</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -86,45 +73,29 @@
 	</div>
 
 	<!-- 编辑新增弹出框 -->
-	<div class="modal hide fade" id="resource_modal">
+	<div class="modal hide fade" id="_modal">
 		<div class="modal-header blue">
 			<button type="button" class="close" data-dismiss="modal">×</button>
-			<label id="resource_modal_header_label"></label>
+			<label id="_modal_header_label"></label>
 		</div>
-		<div class="modal-body" style="min-height: 200px;">
+		<div class="modal-body" style="min-height: 400px;">
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="form-container grid-form form-background left-align form-horizontal">
 						<form action="" method="get" id=''>
-							<input type="hidden" id="resourceId" value="">
-							<div class="control-group">
-								<label for="name" class="control-label">标题：</label>
-								<div class="controls">
-									<input type="text" id="resourceName" value="" placeholder="">
-								</div>
-							</div>
-							<div class="control-group">
-								<label for="name" class="control-label">关键字：</label>
-								<div class="controls">
-									<input type="text" id="keyword" value="" placeholder="">
-								</div>
-							</div>
-							<div class="control-group" id='control_project'>
-								<label for="resourceCategoryId" class="control-label">分类：</label>
-								<div class="controls">
-									<select id='resourceCategoryId'>
-											<option value=""></option>
-									<c:forEach items="${categorys }" var="bean">
-										<option value="${bean.id }">${bean.name }</option>
-									</c:forEach>
-									</select>
-								</div>
-							</div>
+							<input type="hidden" id="id" value="">
 							
-							<div class="control-group" id='control_project'>
-								<label for="resourceRemark" class="control-label">描述：</label>
+							<div class="control-group">
+								<label for="title" class="control-label">公告标题：</label>
 								<div class="controls">
-									<textarea id="resourceRemark" placeholder="" rows="3">
+									<input type="text" id="title" placeholder="">
+								</div>
+							</div>
+							<div class="control-group" id='control_projectStep'>
+								<label for="context" class="control-label">公告内容：</label>
+								<div class="controls">
+									<textarea id='context' name=context rows="20" cols="">
+									
 									</textarea>
 								</div>
 							</div>
@@ -135,8 +106,8 @@
 		</div>
 		
 		<div class="modal-footer center" id="div_footer">
-			<a class="btn btn-primary" onclick="$.adminResource.update()">保存</a>
-			<a href="#"   class="btn" data-dismiss="modal" id="closeViewModal">关闭</a>
+			<a class="btn btn-primary" onclick="$.adminNotice.save()">保存</a>
+			<a href="#" class="btn" data-dismiss="modal" id="closeViewModal">关闭</a>
 		</div>
 	</div>
 </body>

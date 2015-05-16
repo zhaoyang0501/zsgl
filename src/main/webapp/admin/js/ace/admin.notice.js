@@ -1,9 +1,9 @@
-jQuery.adminResource = {
-		resourceDataTable:null,
+jQuery.adminNotice = {
+		noticeDataTable:null,
 		toSave:false,
 		initSearchDataTable : function() {
-			if (this.resourceDataTable == null) {
-				this.resourceDataTable = $('#dt_resource_view').dataTable({
+			if (this.noticeDataTable == null) {
+				this.noticeDataTable = $('#dt_table_view').dataTable({
 					"sDom" : "<'row-fluid'<'span6'l>r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oLanguage" : {
@@ -27,23 +27,16 @@ jQuery.adminResource = {
 					"sServerMethod" : "POST",
 					"bProcessing" : true,
 					"bSort" : false,
-					"sAjaxSource" : $.ace.getContextPath() + "/admin/resource/list",
+					"sAjaxSource" : $.ace.getContextPath() + "/admin/notice/list",
 					"fnDrawCallback" : function(oSettings) {
 						$('[rel="popover"],[data-rel="popover"]').popover();
 					},
 					"fnServerData" : function(sSource, aoData, fnCallback) {
-						var name = $("#name").val();
-						var categoryId = $("#categoryId").val();
+						var name = $("#_name").val();
 						if (!!name) {
 							aoData.push({
 								"name" : "name",
 								"value" : name
-							});
-						}
-						if (!!categoryId) {
-							aoData.push({
-								"name" : "categoryId",
-								"value" : categoryId
 							});
 						}
 						$.ajax({
@@ -58,33 +51,18 @@ jQuery.adminResource = {
 					},
 					"aoColumns" : [ {
 						"mDataProp" : "id"
-					}, {
-						"mDataProp" : "filePath"
-					}, {
-						"mDataProp" : "name"
-					}, {
-						"mDataProp" : "remark"
-					}, {
-						"mDataProp" : "category.name"
-					}, {
-						"mDataProp" : "keyword"
-					}, {
-						"mDataProp" : "creater.userName"
+					},{
+						"mDataProp" : "title"
+					},{
+						"mDataProp" : "context"
 					}, {
 						"mDataProp" : "createDate"
-					}
-					, {
+					}, {
 						"mDataProp" : ""
 					}],
 					"aoColumnDefs" : [
 						{
-							'aTargets' : [1],
-							'fnRender' : function(oObj, sVal) {
-								return "<a href='../resource/detail?id="+oObj.aData.id+"' target='_blank'>"+sVal+"</a>"
-							}
-						},
-						{
-							'aTargets' : [3],
+							'aTargets' : [2],
 							'fnRender' : function(oObj, sVal) {
 								if(sVal.length>10)
 									return sVal.substring(0,10)+".....";
@@ -93,10 +71,10 @@ jQuery.adminResource = {
 							}
 						},
 						{
-							'aTargets' : [8],
+							'aTargets' : [4],
 							'fnRender' : function(oObj, sVal) {
-								return "<button class=\"btn2 btn-info\" onclick=\"$.adminResource.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
-								 "  &nbsp;<button class=\"btn2 btn-info\" onclick=\"$.adminResource.deleteResource("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
+								return "<button class=\"btn2 btn-info\" onclick=\"$.adminNotice.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
+								 "  <button class=\"btn2 btn-info\" onclick=\"$.adminNotice.deleteNotice("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
 							}
 						},
 					 {
@@ -107,23 +85,23 @@ jQuery.adminResource = {
 
 				});
 			} else {
-				var oSettings = this.resourceDataTable.fnSettings();
+				var oSettings = this.noticeDataTable.fnSettings();
 				oSettings._iDisplayStart = 0;
-				this.resourceDataTable.fnDraw(oSettings);
+				this.noticeDataTable.fnDraw(oSettings);
 			}
 
 		},
-		deleteResource :function(id){
+		deleteNotice :function(id){
 			bootbox.confirm( "是否确认删除？", function (result) {
 	            if(result){
 	            	$.ajax({
 	        			type : "get",
-	        			url : $.ace.getContextPath() + "/admin/resource/delete?id="+id,
+	        			url : $.ace.getContextPath() + "/admin/notice/delete?id="+id,
 	        			dataType : "json",
 	        			success : function(json) {
 	        				if(json.resultMap.state=='success'){
 	        					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"success","timeout":"2000"});
-	        					$.adminResource.initSearchDataTable();
+	        					$.adminNotice.initSearchDataTable();
 	        				}else{
 	        					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
 	        				}
@@ -132,42 +110,67 @@ jQuery.adminResource = {
 	            }
 	        });
 		},
-		update : function (){
+		showaddModal: function(id){
+			$.adminNotice.toSave=true;
+			$("#user_modal_header_label").text("新增分类");
+			$("#_modal").modal('show');
+		},
+		save :function (){
+			if($.adminNotice.toSave){
 				$.ajax({
 	    			type : "post",
-	    			url : $.ace.getContextPath() + "/admin/resource/update",
+	    			url : $.ace.getContextPath() + "/admin/notice/save",
 	    			data:{
-	    				"resource.id":$("#resourceId").val(),
-	    				"resource.name":$("#resourceName").val(),
-	    				"resource.remark":$("#resourceRemark").val(),
-	    				"resource.category.id":$("#resourceCategoryId").val(),
-	    				"resource.keyword":$("#keyword").val()
+	    				"notice.title":$("#title").val(),
+	    				"notice.context":$("#context").val()
 	    			},
 	    			dataType : "json",
 	    			success : function(json) {
 	    				if(json.resultMap.state=='success'){
 	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"success","timeout":"2000"});
-	    					$.adminResource.initSearchDataTable();
-	    					$("#resource_modal").modal('hide');
+	    					$.adminNotice.initSearchDataTable();
+	    					$("#_modal").modal('hide');
 	    				}else{
 	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
 	    				}
 	    			}
 	    		});
+			}else{
+				$.ajax({
+	    			type : "post",
+	    			url : $.ace.getContextPath() + "/admin/notice/update",
+	    			data:{
+	    				"notice.id":$("#id").val(),
+	    				"notice.title":$("#title").val(),
+	    				"notice.context":$("#context").val()
+	    			},
+	    			dataType : "json",
+	    			success : function(json) {
+	    				if(json.resultMap.state=='success'){
+	    					$("#user_edit_modal").modal('hide');
+	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"success","timeout":"2000"});
+	    					$.adminNotice.initSearchDataTable();
+	    					$("#_modal").modal('hide');
+	    				}else{
+	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
+	    				}
+	    			}
+	    		});
+			}
 		},
 		showEdit: function (id){
-			$("#resourceId").val(id);
+			$("#id").val(id);
+			$.adminNotice.toSave=false;
 			$.ajax({
     			type : "get",
-    			url : $.ace.getContextPath() + "/admin/resource/get?id="+id,
+    			url : $.ace.getContextPath() + "/admin/notice/get?id="+id,
     			dataType : "json",
     			success : function(json) {
     				if(json.resultMap.state=='success'){
-    					$("#resource_modal").modal('show');
-    					$("#resourceCategoryId").val(json.resultMap.resource.category.id);
-    					$("#resourceName").val(json.resultMap.resource.name);
-    					$("#resourceRemark").val(json.resultMap.resource.remark);
-    					$("#keyword").val(json.resultMap.resource.keyword);
+    					$("#user_modal_header_label").text("修改分类");
+    					$("#_modal").modal('show');
+    					$("#title").val(json.resultMap.object.title);
+    					$("#context").val(json.resultMap.object.context);
     				}else{
     					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
     				}

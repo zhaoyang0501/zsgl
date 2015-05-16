@@ -97,6 +97,7 @@ public class ResourceAction extends ActionSupport {
 		bean.setCategory(categoryService.find(resource.getCategory().getId()));
 		bean.setName(""+resource.getName());
 		bean.setRemark(resource.getRemark());
+		bean.setKeyword(resource.getKeyword());
 		bean.setCreateDate(new Date(System.currentTimeMillis()));
 		resourceService.save(bean);
 		resultMap.put("state", "success");

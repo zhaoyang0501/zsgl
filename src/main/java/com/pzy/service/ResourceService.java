@@ -87,10 +87,7 @@ public class ResourceService {
               public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
               Predicate predicate = cb.conjunction();
               if (keyword != null) {
-                 predicate.getExpressions().add(cb.like(root.get("keyword").as(String.class), "%"+keyword+"%"));
-              }
-              if (category!=null) {
-          		predicate.getExpressions().add(cb.equal(root.get("category").as(Category.class), category));
+                 predicate.getExpressions().add(cb.like(root.get("resource").get("keywork").as(String.class), "%"+keyword+"%"));
               }
               return predicate;
               }
