@@ -13,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Category;
-import com.pzy.entity.Log;
 import com.pzy.entity.Resource;
 import com.pzy.entity.User;
 import com.pzy.service.CategoryService;
-import com.pzy.service.LogService;
 import com.pzy.service.ResourceService;
 import com.pzy.service.UserService;
  
@@ -39,8 +37,6 @@ public class IndexAction extends ActionSupport implements SessionAware {
 	private ResourceService resourceService;
 	
 	@Autowired
-	private LogService logService;
-	@Autowired
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/index.jsp") })  
     public String index() throws Exception { 
 		resourcesHot=resourceService.findHot();
@@ -49,7 +45,6 @@ public class IndexAction extends ActionSupport implements SessionAware {
     }  
     @Action(value = "center", results = { @Result(name = "success", location = "/WEB-INF/views/center.jsp") })  
     public String center() throws Exception {  
-    	logService.save(getUserFromSession(),getIp(),"访问了个人中心",Log.INFO_LEVEL);
         return SUCCESS;  
     } 
     @Action(value = "register", results = { @Result(name = "success", location = "/WEB-INF/views/register.jsp") })  
@@ -60,7 +55,6 @@ public class IndexAction extends ActionSupport implements SessionAware {
     public String find() throws Exception { 
     	resources=this.resourceService.findAll();
     	categorys=this.categoryService.findAll();
-    	logService.save(getUserFromSession(),getIp(),"访问资源搜索",Log.INFO_LEVEL);
     	return SUCCESS;  
     }
     @Action(value = "goupload", results = { @Result(name = "success", location = "/WEB-INF/views/goupload.jsp") })  
@@ -74,7 +68,6 @@ public class IndexAction extends ActionSupport implements SessionAware {
     public String myupload() throws Exception {
     	User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
     	this.resources=resourceService.find(user);
-    	logService.save(getUserFromSession(),getIp(),"访问我的上传",Log.INFO_LEVEL);
     	return SUCCESS;  
     }
     @Action(value = "registerUser", results = { @Result(name = "success", location = "/WEB-INF/views/registerok.jsp") })  
@@ -98,12 +91,10 @@ public class IndexAction extends ActionSupport implements SessionAware {
     	User loginuser=userService.login(user.getUserName(), user.getPassword());
     	if(loginuser!=null){
     		session.put("user",loginuser );
-    		 logService.save(loginuser,getIp(),"登录了系统",Log.INFO_LEVEL);	 
             return SUCCESS; 
     	}
     	else{
     		ActionContext.getContext().getSession().clear();
-    		logService.save(null,getIp(),user.getUserName()+"尝试登录系统失败！",Log.WARM_LEVEL);	 
     		this.tip="登陆失败 不存在此用户名或密码!";
     		return LOGIN;
     	}

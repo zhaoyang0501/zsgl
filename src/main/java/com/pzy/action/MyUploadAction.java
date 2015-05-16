@@ -13,21 +13,14 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.pzy.entity.Log;
 import com.pzy.entity.Resource;
 import com.pzy.entity.User;
 import com.pzy.service.CategoryService;
-import com.pzy.service.LogService;
 import com.pzy.service.ResourceService;
-import com.pzy.service.UserService;
  
 @ParentPackage("struts-default")  
 public class MyUploadAction extends ActionSupport implements SessionAware {
-    private File imgPath;  
-   	private String imgPathContentType;  
-    private String imgPathFileName;  
     /**上传的文件*/
     private File filePath;  
     /**上传的文件ContentType*/
@@ -42,7 +35,6 @@ public class MyUploadAction extends ActionSupport implements SessionAware {
     @Autowired
     private CategoryService categoryService;
     @Autowired
-	private LogService logService;
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 	}
@@ -50,7 +42,6 @@ public class MyUploadAction extends ActionSupport implements SessionAware {
 	public String deleteResource(){
 		resourceService.delete(resource.getId());
 		tip="删除成功";
-		logService.save(this.getUserFromSession(), this.getIp(), "删除了一个资源id为"+resource.getId(), Log.INFO_LEVEL);
 		return SUCCESS;
 	}
 	
@@ -60,24 +51,19 @@ public class MyUploadAction extends ActionSupport implements SessionAware {
 		User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
 		resource.setCreater(user);
 		resource.setCategory(categoryService.find(this.categoryId));
-		resource.setImgPath(this.imgPathFileName);
 		resource.setFilePath(this.filePathFileName);
 		resourceService.save(resource);
 		/**文件上传逻辑*/
 		String realpath = ServletActionContext.getServletContext().getRealPath("/upload");
 		System.out.println(realpath);
-		File saveImg = new File(new File(realpath), this.imgPathFileName);
 		File savefile = new File(new File(realpath), this.filePathFileName);
          try {
-			FileUtils.copyFile(imgPath, saveImg);
 			FileUtils.copyFile(filePath, savefile);
 		} catch (IOException e) {
 			e.printStackTrace();
-			logService.save(this.getUserFromSession(), this.getIp(), "系统异常"+e.getMessage(), Log.DANGER_LEVEL);
 			return ERROR;
 		}
          tip="上传成功";
-         logService.save(this.getUserFromSession(), this.getIp(), "上传了一个资源文件"+resource.getId(), Log.INFO_LEVEL);
 		return SUCCESS;
 	}
 
@@ -91,31 +77,6 @@ public class MyUploadAction extends ActionSupport implements SessionAware {
 	private String getIp() {
 		return ServletActionContext.getRequest().getRemoteAddr();
 	}
-
-	public File getImgPath() {
-		return imgPath;
-	}
-
-	public void setImgPath(File imgPath) {
-		this.imgPath = imgPath;
-	}
-
-	public String getImgPathContentType() {
-		return imgPathContentType;
-	}
-
-	public void setImgPathContentType(String imgPathContentType) {
-		this.imgPathContentType = imgPathContentType;
-	}
-
-	public String getImgPathFileName() {
-		return imgPathFileName;
-	}
-
-	public void setImgPathFileName(String imgPathFileName) {
-		this.imgPathFileName = imgPathFileName;
-	}
-
 	public File getFilePath() {
 		return filePath;
 	}

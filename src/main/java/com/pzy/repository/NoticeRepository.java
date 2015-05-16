@@ -2,9 +2,7 @@ package com.pzy.repository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.pzy.entity.Category;
-import com.pzy.entity.Log;
-public interface LogRepository extends PagingAndSortingRepository<Log, Long>,JpaSpecificationExecutor<Log>{
-    
+import com.pzy.entity.Notice;
+public interface NoticeRepository extends PagingAndSortingRepository<Notice, Long>,JpaSpecificationExecutor<Notice>{
 }
 

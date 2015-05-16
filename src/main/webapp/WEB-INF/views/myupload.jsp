@@ -63,7 +63,7 @@
 					<p>目前还没有上传资源</p>
 				</c:if>
 				<c:forEach items="${resources}" var="bean">
-					<li class="article-list-item "> 
+					<%-- <li class="article-list-item "> 
 						<div class="item-cover">
 							<a href="detail?id=${bean.id }"><img width="106px;" alt="${bean.name }" src="${pageContext.request.contextPath}/upload/${bean.imgPath}"></a>
 						</div>
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 						</div>
-					</li>
+					</li> --%>
 				</c:forEach>
 		</ul>
 	</div><!-- left end span12 -->

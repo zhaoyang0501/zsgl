@@ -19,7 +19,6 @@ public class Resource {
 	private Long id;
 	private String name;
 	private String remark;
-	private String imgPath;
 	private String filePath;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User creater;
@@ -27,6 +26,14 @@ public class Resource {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 	private Integer count;
+	
+	private String keyword;
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -44,12 +51,6 @@ public class Resource {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 	public String getFilePath() {
 		return filePath;

@@ -63,7 +63,6 @@ public class ResourceService {
      }
      public Page<Resource> findAll(final int pageNumber, final int pageSize,final String name,final Long categoryId){
          PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
-        
          Specification<Resource> spec = new Specification<Resource>() {
               @Override
               public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -79,5 +78,24 @@ public class ResourceService {
          };
          Page<Resource> result = (Page<Resource>) resourceRepository.findAll(spec, pageRequest);
          return result;
-}
+     }
+     
+     public Page<Resource> findAll(final int pageNumber, final int pageSize,final String keyword,final Category category){
+         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
+         Specification<Resource> spec = new Specification<Resource>() {
+              @Override
+              public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+              Predicate predicate = cb.conjunction();
+              if (keyword != null) {
+                 predicate.getExpressions().add(cb.like(root.get("keyword").as(String.class), "%"+keyword+"%"));
+              }
+              if (category!=null) {
+          		predicate.getExpressions().add(cb.equal(root.get("category").as(Category.class), category));
+              }
+              return predicate;
+              }
+         };
+         Page<Resource> result = (Page<Resource>) resourceRepository.findAll(spec, pageRequest);
+         return result;
+     }
 }

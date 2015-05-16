@@ -22,24 +22,13 @@
 		<script src="${pageContext.request.contextPath}/admin/js/falgun/dataTables.bootstrap.js"></script>
 		<script src="${pageContext.request.contextPath}/admin/js/falgun/TableTools.min.js"></script>
 		<script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.min.js"></script>
-		<script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.zh-CN.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/resource.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/ace.js"></script>
-		<script src="${pageContext.request.contextPath}/admin/js/falgun/jquery.dataTables.min.js"></script>
-		<script src="${pageContext.request.contextPath}/admin/js/falgun/dataTables.bootstrap.js"></script>
-		<script src="${pageContext.request.contextPath}/admin/js/falgun/TableTools.min.js"></script>
-		<script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.min.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$.ace.setContextPath('${pageContext.request.contextPath}');
-		$.resource.initSearchDataTable();
-	});
-	
-	function go_dofind(){
-		window.location.href="dofind?categoryid=${bean.id }&key="+encodeURI(encodeURI($("#ppt-search").val())); ; 
-	}
-</script>
+		<script type="text/javascript">
+			$(function(){
+				$.ace.setContextPath('${pageContext.request.contextPath}');
+				$.notice.initSearchDataTable();
+			});
+		</script>
 </head>
 
 <body>
@@ -53,45 +42,25 @@
 		<div class="row">
 			<div class="span12">
 				<div class="bread-crumb">
-					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">无损知识检索</a>
+					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">资源检索</a>
 				</div>
 			</div>
 		</div>
 
 		<div class="row" style="padding-top: 15px;">
-			<div class="span3 ">
-				<ul class="ppt-category-list">
-						<li><a  id='category_href_' class="selected" href="javascript:;" onclick="$.resource.categoryChange('');">所有知识</a></li>
-					<c:forEach items="${categorys }" var="bean">
-						<li><a  id='category_href_${bean.id }'  href="javascript:;" onclick="$.resource.categoryChange('${bean.id }');">${bean.name }</a></li>
-					</c:forEach>
-					
-				</ul>
-				
-
-			</div>
-			<div class="span9 ">
-				<form class="form-inline well" >
-					<div class="input-append">
-					<input type="hidden" id="category" value="">
-					  <input class="span2" id="name_" type="text">
-					  <button class="btn" type="button" onclick="$.resource.initSearchDataTable()" >搜素一下</button>
-					</div>
-				</form>
-				
-				<table id='dt_table_view' class="table  table-bordered">
-					<thead>
-						<tr>
-							<th>标题</th>
-							<th>上传者</th>
-							<th>上传时间</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
+			<div class="span12 ">
+				<table id='dt_table_view' class="table table-bordered">
+					    <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>公告内容</th>
+                  <th>公告时间</th>
+                  <th>查看</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
 				</table>
-				
 			</div>
 		</div>
 		<!-- 页脚 -->

@@ -26,12 +26,12 @@
 		<div class="row">
 			<div class="span12">
 				<div class="bread-crumb">
-					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">资源检索</a>
+					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">无损知识检索</a>
 				</div>
 			</div>
 		</div>
 		<div class="row" style="padding-top: 15px;">
-		<div class="span8">
+		<div class="span12">
 			<div class="row">
 				<div class="span12">
 					<div class="ppt-title">
@@ -47,47 +47,14 @@
 				</div>
 			</div>
 			<p>${resource.remark }</p>
-		<c:if test="${isVideo}">
-			<div class="ppt">
-				<div id="flash_content">	
-					<div id="flash_div">
-					<video src="./upload/${resource.filePath }" width="100%" height="100%" controls="controls">您的浏览器不支持此种视频格式。</video> 
-					</div>
-				</div>		
-			</div>
-		</c:if>
-		
 		<div class="ppt-detail">
 			<div class="bshare" id="bshre_element">
 			</div>
 			<div class="ppt-download">
-				<a class="download-btn"  href="./upload/${resource.filePath }"">立即下载</a>
+				<a class="download-btn"  href="../upload/${resource.filePath }"">立即下载</a>
 			</div>
 		</div>
 	</div>
-		<div class="span4">
-			
-		<div class="relative-res relative-ppts">
-			<h2>相关资源</h2>
-			<div class="items">
-				<ul class="relative-ppt-wrapper higher">
-					<c:forEach items="${resources }" var="bean">
-						<li class="item" rel="1">
-							<a class="item-img-wrapper" title="${bean.name }  " href="detail?id=${bean.id }">
-								<img alt="${bean.name } " src="upload/${bean.imgPath }">
-							</a>
-							<div class="item-detail">
-								<p class="item-name"><a href="detail?id=${bean.id }">${bean.name }  </a></p>
-								<p class="download-count light-grey">${bean.count } 浏览</p>
-							</div>
-						 </li>
-					</c:forEach>
-				</ul>
-			</div>
-			</div>
-		
-				
-	</div>	
 		</div>
 		<!-- 页脚 -->
 		<%@ include file="foot.jsp"%>

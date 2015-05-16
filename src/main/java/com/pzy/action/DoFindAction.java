@@ -1,30 +1,20 @@
 package com.pzy.action;  
   
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Category;
-import com.pzy.entity.Log;
 import com.pzy.entity.Resource;
 import com.pzy.entity.User;
 import com.pzy.service.CategoryService;
-import com.pzy.service.LogService;
 import com.pzy.service.ResourceService;
-import com.pzy.service.UserService;
  
 @ParentPackage("struts-default")  
 public class DoFindAction extends ActionSupport  {
@@ -37,8 +27,6 @@ public class DoFindAction extends ActionSupport  {
 	private CategoryService categoryService;
 	@Autowired
 	private ResourceService resourceService;
-	  @Autowired
-	private LogService logService;
 	 @Action(value = "dofind", results = { @Result(name = "success", location = "/WEB-INF/views/find.jsp") })  
 	public String doFind(){
 		 /**中文乱码问题*/
@@ -50,7 +38,6 @@ public class DoFindAction extends ActionSupport  {
 		}
 		resources=this.resourceService.findAll(1, 1000,key,categoryid).getContent();
     	categorys=this.categoryService.findAll();
-    	logService.save(null,getIp(),"查找了资源 查找关键字为"+key,Log.WARM_LEVEL);	 
 		return SUCCESS;
 	}
 	

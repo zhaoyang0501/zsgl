@@ -31,7 +31,9 @@
 			</c:if>
 			<ul class="topbar-nav-list sf-menu" id="djt_menu">
 				<li id="nav_1"><a href="${pageContext.request.contextPath}/index">首页</a></li>
+				<li id="nav_1"><a href="${pageContext.request.contextPath}/notice">公告</a></li>
 				<li id="nav_3"><a href="${pageContext.request.contextPath}/find">无损知识检索</a></li>
+				<li id="nav_3"><a href="${pageContext.request.contextPath}/find">收藏夹</a></li>
 				<li id="nav_6"><a href="${pageContext.request.contextPath}/myupload">我的上传</a></li>
 				<li id="nav_6"><a href="${pageContext.request.contextPath}/center">个人中心</a></li>
 			</ul>

@@ -44,11 +44,7 @@
 					<c:forEach items="${resourcesNew }" var="bean">
 					<li>
 							<div>
-								<div class="ppt-cover-content">
-									<a href="detail?id=${bean.id }">
-										<img width="180" height="135" src="upload/${bean.imgPath }">
-									</a>
-								</div>
+								
 								<p class="subject">
 									<a href="detail?id=${bean.id }">${bean.name }</a>
 								</p>
@@ -77,11 +73,6 @@
 					<c:forEach items="${resourcesHot }" var="bean">
 					<li>
 							<div>
-								<div class="ppt-cover-content">
-									<a href="detail?id=${bean.id }">
-										<img width="180" height="135" src="upload/${bean.imgPath }">
-									</a>
-								</div>
 								<p class="subject">
 									<a href="detail?id=${bean.id }">${bean.name }</a>
 								</p>

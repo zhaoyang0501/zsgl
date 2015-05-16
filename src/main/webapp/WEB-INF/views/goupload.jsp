@@ -74,7 +74,7 @@
 					    </div>
 					  </div>
 					   <div class="control-group">
-					    <label class="control-label" for="userName">类别</label>
+					    <label class="control-label" for="userName">检测类型</label>
 					    <div class="controls">
 					     	<select name='categoryId' value="${resource.category.id }">
 					     	<option value=""></option>
@@ -90,13 +90,6 @@
 					    </div>
 					  </div>
 					  
-					 
-					  <div class="control-group">
-					    <label class="control-label" for="password">缩略图</label>
-					    <div class="controls">
-					      <input name='imgPath' type="file" class="file" >
-					    </div>
-					  </div>
 					   <div class="control-group">
 					    <label class="control-label" for="user.school">选择文件</label>
 					    <div class="controls">
@@ -104,6 +97,12 @@
 					    </div>
 					  </div>
 					  
+					   <div class="control-group">
+					    <label class="control-label" for="password">关键字</label>
+					    <div class="controls">
+					       <input name='resource.keyword'  type="text"  placeholder="" value='${resource.keyword}'/>
+					    </div>
+					  </div>
 					   <div class="control-group">
 					    <label class="control-label" for="password">描述</label>
 					    <div class="controls">
