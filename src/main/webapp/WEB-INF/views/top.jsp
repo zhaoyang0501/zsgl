@@ -33,7 +33,6 @@
 				<li id="nav_1"><a href="${pageContext.request.contextPath}/find">首页</a></li>
 				<li id="nav_1"><a href="${pageContext.request.contextPath}/notice">公告</a></li>
 				<li id="nav_3"><a href="${pageContext.request.contextPath}/collect">收藏夹</a></li>
-				<li id="nav_6"><a href="${pageContext.request.contextPath}/goupload">我的上传</a></li>
 				<li id="nav_6"><a href="${pageContext.request.contextPath}/center">个人中心</a></li>
 			</ul>
 		</div>

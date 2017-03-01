@@ -26,7 +26,7 @@
 			<div class="tab-pane active dailyreport" id="dailyreport">
 				<ul id="nav" class="accordion-nav" >
 					<li><a href="${pageContext.request.contextPath}/admin/user/index"><i class="icon-pencil"></i> 用户管理</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/category/index"><i class="icon-upload"></i> 无损知识分类管理 </a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/category/index"><i class="icon-upload"></i> 知识分类管理 </a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/resource/index"><i class="icon-zoom-in"></i> 上传文件管理</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/notice/index"><i class="icon-zoom-out"></i>公告管理</a></li>
 					

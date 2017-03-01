@@ -53,7 +53,7 @@
 		<div class="row">
 			<div class="span12">
 				<div class="bread-crumb">
-					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">无损知识检索</a>
+					<a href="#">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp; <a href="#">知识检索</a>
 				</div>
 			</div>
 		</div>
